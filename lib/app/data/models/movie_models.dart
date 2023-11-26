@@ -162,9 +162,9 @@ class Externals {
   });
 
   factory Externals.fromJson(Map<String, dynamic> json) => Externals(
-        tvrage: json['tvrage'],
-        thetvdb: json['thetvdb'],
-        imdb: json['imdb'],
+        tvrage: json['tvrage'] ?? 0,
+        thetvdb: json['thetvdb'] ?? 0,
+        imdb: json['imdb'] ?? '',
       );
   dynamic tvrage;
   int? thetvdb;
@@ -184,8 +184,8 @@ class Image {
   });
 
   factory Image.fromJson(Map<String, dynamic> json) => Image(
-        medium: json['medium'],
-        original: json['original'],
+        medium: json['medium'] ?? "",
+        original: json['original'] ?? '',
       );
   String? medium;
   String? original;
@@ -212,10 +212,10 @@ class Links {
 
   factory Links.fromJson(Map<String, dynamic> json) => Links(
         self: json['self'] == null
-            ? null
+            ? Previousepisode()
             : Previousepisode.fromJson(json['self']),
         previousepisode: json['previousepisode'] == null
-            ? null
+            ? Previousepisode()
             : Previousepisode.fromJson(json['previousepisode']),
       );
   Previousepisode? self;
@@ -234,7 +234,7 @@ class Previousepisode {
 
   factory Previousepisode.fromJson(Map<String, dynamic> json) =>
       Previousepisode(
-        href: json['href'],
+        href: json['href'] ?? '',
       );
   String? href;
 
@@ -252,11 +252,12 @@ class Network {
   });
 
   factory Network.fromJson(Map<String, dynamic> json) => Network(
-        id: json['id'],
-        name: json['name'],
-        country:
-            json['country'] == null ? null : Country.fromJson(json['country']),
-        officialSite: json['officialSite'],
+        id: json['id'] ?? 0,
+        name: json['name'] ?? '',
+        country: json['country'] == null
+            ? Country()
+            : Country.fromJson(json['country']),
+        officialSite: json['officialSite'] ?? '',
       );
   int? id;
   String? name;
@@ -279,9 +280,9 @@ class Country {
   });
 
   factory Country.fromJson(Map<String, dynamic> json) => Country(
-        name: json['name'],
-        code: json['code'],
-        timezone: json['timezone'],
+        name: json['name'] ?? '',
+        code: json['code'] ?? '',
+        timezone: json['timezone'] ?? '',
       );
   String? name;
   String? code;
@@ -300,7 +301,7 @@ class Rating {
   });
 
   factory Rating.fromJson(Map<String, dynamic> json) => Rating(
-        average: json['average']?.toDouble(),
+        average: json['average']?.toDouble() ?? 0.0,
       );
   double? average;
 
@@ -316,7 +317,7 @@ class Schedule {
   });
 
   factory Schedule.fromJson(Map<String, dynamic> json) => Schedule(
-        time: json['time'],
+        time: json['time'] ?? '',
         days: json['days'] == null
             ? <String>[]
             : List<String>.from(json['days']!.map((x) => x)),

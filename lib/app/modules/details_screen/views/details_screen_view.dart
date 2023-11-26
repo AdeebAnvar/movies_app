@@ -27,7 +27,7 @@ class DetailsScreenView extends GetView<DetailsScreenController> {
                     bottomRight: Radius.circular(20),
                   ),
                   image: DecorationImage(
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                       image: NetworkImage(
                           controller.movieData.value.show!.image?.medium ??
                               brokenImage))),
