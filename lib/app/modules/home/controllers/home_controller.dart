@@ -1,23 +1,32 @@
+import 'dart:developer';
+
 import 'package:get/get.dart';
 
-class HomeController extends GetxController {
-  //TODO: Implement HomeController
+import '../../../data/models/movie_models.dart';
+import '../../../data/models/repository/movie_repo.dart';
+import '../../../routes/app_pages.dart';
 
-  final count = 0.obs;
+class HomeController extends GetxController {
+  RxList<MoviesModel> moviesList = <MoviesModel>[].obs;
   @override
   void onInit() {
     super.onInit();
+    fetchAllMovies()
+        .then((List<MoviesModel> movielist) => moviesList.value = movielist);
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<List<MoviesModel>> fetchAllMovies() async {
+    try {
+      final List<MoviesModel> response = await MovieRepo().fetchMovies();
+      log(response.toString());
+      return response;
+    } catch (e) {
+      log(e.toString());
+
+      return <MoviesModel>[];
+    }
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
+  void onClickSingleMovieCard(MoviesModel singleMovieData) =>
+      Get.toNamed(Routes.DETAILS_SCREEN, arguments: singleMovieData);
 }
